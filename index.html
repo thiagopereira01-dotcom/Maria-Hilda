@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EE Maria Hilda Ornelas de Oliveira</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-1: #eef3fb;
+      --bg-2: #f7f4ee;
+      --card: rgba(255, 255, 255, 0.86);
+      --border: rgba(15, 40, 80, 0.08);
+      --text: #122033;
+      --muted: #5b6b82;
+      --accent: #0b57d0;
+      --accent-soft: #dce8ff;
+      --danger: #c62828;
+      --shadow: 0 12px 18px rgba(18, 40, 80, 0.06), 0 28px 56px rgba(18, 40, 80, 0.14);
+      --radius: 6px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+      color: var(--text);
+      line-height: 1.45;
+      min-height: 100%;
+    }
+
+    body {
+      background:
+        radial-gradient(900px 420px at 8% -10%, #c9dcff 0%, transparent 55%),
+        radial-gradient(700px 380px at 100% 0%, #ffe7c4 0%, transparent 50%),
+        radial-gradient(600px 300px at 50% 100%, #d9f0e4 0%, transparent 45%),
+        linear-gradient(180deg, var(--bg-1), var(--bg-2));
+    }
+
+    .portal {
+      min-height: 100vh;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 2.75rem 1.25rem 3.5rem;
+    }
+
+    .portal-header {
+      text-align: center;
+      margin-bottom: 2.75rem;
+    }
+
+    .portal-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.4rem 0.9rem;
+      margin-bottom: 1rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid var(--border);
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      backdrop-filter: blur(10px);
+    }
+
+    .portal-title {
+      margin: 0 0 0.75rem;
+      font-size: clamp(1.7rem, 4.4vw, 2.45rem);
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+    }
+
+    .portal-subtitle {
+      margin: 0 auto;
+      max-width: 560px;
+      color: var(--muted);
+      font-size: 1.02rem;
+    }
+
+    .portal-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem 1.75rem;
+      padding: 0.75rem 0.25rem 1.5rem;
+    }
+
+    @keyframes float-card {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .system-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 0.95rem;
+      min-height: 168px;
+      aspect-ratio: 16 / 10;
+      padding: 1.25rem 1.35rem 1.1rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      text-decoration: none;
+      color: inherit;
+      overflow: hidden;
+      backdrop-filter: blur(16px);
+      isolation: isolate;
+      animation: float-card 5.2s ease-in-out infinite;
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+    }
+
+    .system-card:nth-child(2) { animation-delay: 0.45s; }
+    .system-card:nth-child(3) { animation-delay: 0.9s; }
+    .system-card:nth-child(4) { animation-delay: 0.2s; }
+    .system-card:nth-child(5) { animation-delay: 0.7s; }
+    .system-card:nth-child(6) { animation-delay: 1.1s; }
+
+    .system-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto auto 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(90deg, var(--card-accent), color-mix(in srgb, var(--card-accent) 40%, white));
+    }
+
+    .system-card::after {
+      content: "";
+      position: absolute;
+      right: -40px;
+      top: -40px;
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: color-mix(in srgb, var(--card-accent) 14%, transparent);
+      z-index: -1;
+      transition: transform 0.3s ease;
+    }
+
+    .system-card:hover {
+      animation-play-state: paused;
+      transform: translateY(-16px);
+      border-color: color-mix(in srgb, var(--card-accent) 45%, white);
+      box-shadow:
+        0 18px 28px color-mix(in srgb, var(--card-accent) 16%, rgba(18, 40, 80, 0.08)),
+        0 36px 70px rgba(18, 40, 80, 0.18);
+    }
+
+    .system-card:hover::after {
+      transform: scale(1.25);
+    }
+
+    .system-card.is-disabled {
+      cursor: default;
+      opacity: 0.92;
+    }
+
+    .system-card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .system-card-icon {
+      display: grid;
+      place-items: center;
+      width: 3.15rem;
+      height: 3.15rem;
+      border-radius: 6px;
+      background: linear-gradient(180deg, color-mix(in srgb, var(--card-accent) 18%, white), color-mix(in srgb, var(--card-accent) 8%, white));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.8), 0 8px 18px color-mix(in srgb, var(--card-accent) 18%, transparent);
+      font-size: 1.7rem;
+    }
+
+    .system-card-title {
+      margin: 0 0 0.4rem;
+      font-size: 1.22rem;
+      letter-spacing: -0.02em;
+    }
+
+    .system-card-desc {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.94rem;
+      line-height: 1.55;
+    }
+
+    .system-card-action {
+      margin-top: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--card-accent);
+    }
+
+    .system-card-action .arrow {
+      transition: transform 0.2s ease;
+    }
+
+    .system-card:hover .system-card-action .arrow {
+      transform: translateX(4px);
+    }
+
+    .soon-chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      background: #eef2f7;
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .card-admin-actions {
+      display: flex;
+      gap: 0.35rem;
+    }
+
+    .icon-btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.9);
+      color: var(--text);
+      width: 2rem;
+      height: 2rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+
+    .icon-btn:hover { background: #fff; }
+    .icon-btn.danger:hover { color: var(--danger); border-color: #f3c0c0; }
+
+    .add-card {
+      min-height: 168px;
+      display: grid;
+      place-items: center;
+      border: 1.5px dashed color-mix(in srgb, var(--accent) 40%, #cfd8e3);
+      background: rgba(255,255,255,0.45);
+      color: var(--accent);
+      cursor: pointer;
+      box-shadow: none;
+      animation: none;
+    }
+
+    .add-card:hover {
+      background: rgba(255,255,255,0.8);
+      transform: translateY(-10px);
+      box-shadow: var(--shadow);
+    }
+
+    .add-card-inner {
+      text-align: center;
+    }
+
+    .add-card-plus {
+      display: grid;
+      place-items: center;
+      width: 3.2rem;
+      height: 3.2rem;
+      margin: 0 auto 0.7rem;
+      border-radius: 6px;
+      background: var(--accent-soft);
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+
+    .portal-footer {
+      margin-top: 3rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 0.75rem 1.25rem;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .portal-footer p { margin: 0; }
+
+    .admin-link, .admin-logout {
+      appearance: none;
+      border: 0;
+      background: none;
+      color: var(--accent);
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .admin-bar {
+      display: none;
+      margin: -0.5rem auto 1.75rem;
+      max-width: 720px;
+      padding: 0.85rem 1rem;
+      border-radius: 16px;
+      background: #122033;
+      color: #fff;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    body.is-admin .admin-bar { display: block; }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      display: none;
+      place-items: center;
+      padding: 1rem;
+      background: rgba(12, 22, 40, 0.45);
+      backdrop-filter: blur(6px);
+      z-index: 20;
+    }
+
+    .overlay.open { display: grid; }
+
+    .modal {
+      width: min(520px, 100%);
+      max-height: calc(100vh - 2rem);
+      overflow: auto;
+      padding: 1.4rem;
+      border-radius: 20px;
+      background: #fff;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.22);
+    }
+
+    .modal h2 {
+      margin: 0 0 0.35rem;
+      font-size: 1.25rem;
+    }
+
+    .modal p.hint {
+      margin: 0 0 1.1rem;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .field {
+      display: grid;
+      gap: 0.35rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .field label {
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .field input, .field textarea, .field select {
+      width: 100%;
+      padding: 0.72rem 0.8rem;
+      border: 1px solid #d5deea;
+      border-radius: 12px;
+      font: inherit;
+      background: #f8fafc;
+    }
+
+    .field textarea { min-height: 84px; resize: vertical; }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .emoji-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+
+    .emoji-opt {
+      width: 2.2rem;
+      height: 2.2rem;
+      border: 1px solid #d5deea;
+      border-radius: 10px;
+      background: #fff;
+      cursor: pointer;
+      font-size: 1.05rem;
+    }
+
+    .emoji-opt.active {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.6rem;
+      margin-top: 1.1rem;
+    }
+
+    .btn {
+      appearance: none;
+      border: 0;
+      border-radius: 12px;
+      padding: 0.7rem 1rem;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn-ghost {
+      background: #eef2f7;
+      color: var(--text);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .error {
+      display: none;
+      margin: 0 0 0.8rem;
+      color: var(--danger);
+      font-size: 0.88rem;
+      font-weight: 600;
+    }
+
+    .error.show { display: block; }
+
+    @media (max-width: 560px) {
+      .field-row { grid-template-columns: 1fr; }
+      .system-card { aspect-ratio: 16 / 11; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .system-card { animation: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="portal">
+    <div class="admin-bar">Modo administrador ativo. Você pode adicionar, editar e definir as URLs dos sistemas.</div>
+
+    <header class="portal-header">
+      <div class="portal-badge">Portal digital</div>
+      <h1 class="portal-title">EE Maria Hilda Ornelas de Oliveira</h1>
+      <p class="portal-subtitle">
+        Acesse os sistemas da escola em um só lugar. Escolha abaixo o que deseja utilizar.
+      </p>
+    </header>
+
+    <section class="portal-grid" id="cards-grid" aria-label="Sistemas disponíveis"></section>
+
+    <footer class="portal-footer">
+      <p>EE Maria Hilda Ornelas de Oliveira · Sistemas internos</p>
+      <button class="admin-link" id="admin-open" type="button">Administração</button>
+      <button class="admin-logout" id="admin-logout" type="button" hidden>Sair do admin</button>
+    </footer>
+  </div>
+
+  <div class="overlay" id="login-overlay" role="dialog" aria-modal="true" aria-labelledby="login-title">
+    <form class="modal" id="login-form">
+      <h2 id="login-title">Acesso do administrador</h2>
+      <p class="hint">Digite a senha para gerenciar os cards e as URLs dos sistemas. Senha padrão: <strong>admin</strong></p>
+      <p class="error" id="login-error">Senha incorreta.</p>
+      <div class="field">
+        <label for="admin-password">Senha</label>
+        <input id="admin-password" type="password" autocomplete="current-password" required />
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" type="button" data-close="login-overlay">Cancelar</button>
+        <button class="btn btn-primary" type="submit">Entrar</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="overlay" id="card-overlay" role="dialog" aria-modal="true" aria-labelledby="card-form-title">
+    <form class="modal" id="card-form">
+      <h2 id="card-form-title">Novo sistema</h2>
+      <p class="hint">Preencha os dados do card e a URL para onde o aluno ou servidor será direcionado.</p>
+      <input type="hidden" id="card-id" />
+      <div class="field">
+        <label for="card-title">Nome do sistema</label>
+        <input id="card-title" required maxlength="60" placeholder="Ex.: Minha Vez" />
+      </div>
+      <div class="field">
+        <label for="card-desc">Descrição</label>
+        <textarea id="card-desc" required maxlength="180" placeholder="Explique em uma frase o que o sistema faz."></textarea>
+      </div>
+      <div class="field">
+        <label for="card-url">URL de destino</label>
+        <input id="card-url" type="url" placeholder="https://exemplo.com" />
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="card-color">Cor do card</label>
+          <input id="card-color" type="color" value="#1565c0" />
+        </div>
+        <div class="field">
+          <label for="card-icon-input">Ícone (emoji)</label>
+          <input id="card-icon-input" maxlength="4" value="🔗" />
+        </div>
+      </div>
+      <div class="field">
+        <label>Sugestões de ícone</label>
+        <div class="emoji-grid" id="emoji-grid"></div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" type="button" data-close="card-overlay">Cancelar</button>
+        <button class="btn btn-primary" type="submit">Salvar card</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    const STORAGE_KEY = "portal-escola-cards";
+    const SESSION_KEY = "portal-escola-admin";
+    const DEFAULT_PASSWORD = "admin";
+    const EMOJIS = ["🚻", "📋", "📦", "📚", "🧑‍🏫", "🗓️", "📝", "🎓", "🏫", "🔗", "💻", "📊", "📢", "🍽️", "🚌"];
+
+    const DEFAULT_CARDS = [
+      {
+        id: "minha-vez",
+        title: "Minha Vez",
+        desc: "Fila digital para uso do banheiro durante as aulas.",
+        url: "",
+        icon: "🚻",
+        color: "#1565c0"
+      },
+      {
+        id: "acompanha-ai",
+        title: "Acompanha-ai",
+        desc: "Registro e acompanhamento de ocorrências escolares.",
+        url: "",
+        icon: "📋",
+        color: "#2e7d32"
+      },
+      {
+        id: "edurkl",
+        title: "Edurkl",
+        desc: "Gestão de materiais e recursos pedagógicos da escola.",
+        url: "",
+        icon: "📦",
+        color: "#6a1b9a"
+      }
+    ];
+
+    const grid = document.getElementById("cards-grid");
+    const loginOverlay = document.getElementById("login-overlay");
+    const cardOverlay = document.getElementById("card-overlay");
+    const loginForm = document.getElementById("login-form");
+    const cardForm = document.getElementById("card-form");
+    const loginError = document.getElementById("login-error");
+    const adminOpen = document.getElementById("admin-open");
+    const adminLogout = document.getElementById("admin-logout");
+    const emojiGrid = document.getElementById("emoji-grid");
+
+    function loadCards() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        if (Array.isArray(saved) && saved.length) return saved;
+      } catch (e) {}
+      return DEFAULT_CARDS.map((card) => ({ ...card }));
+    }
+
+    function saveCards(cards) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(cards));
+    }
+
+    function isAdmin() {
+      return sessionStorage.getItem(SESSION_KEY) === "1";
+    }
+
+    function setAdmin(active) {
+      if (active) sessionStorage.setItem(SESSION_KEY, "1");
+      else sessionStorage.removeItem(SESSION_KEY);
+      document.body.classList.toggle("is-admin", active);
+      adminOpen.hidden = active;
+      adminLogout.hidden = !active;
+      render();
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;");
+    }
+
+    function render() {
+      const cards = loadCards();
+      const admin = isAdmin();
+
+      grid.innerHTML = cards.map((card) => {
+        const hasUrl = Boolean(card.url);
+        const href = hasUrl ? escapeHtml(card.url) : "#";
+        const target = hasUrl ? ' target="_blank" rel="noopener noreferrer"' : "";
+        const disabledClass = hasUrl ? "" : " is-disabled";
+        const action = hasUrl
+          ? 'Acessar <span class="arrow">→</span>'
+          : '<span class="soon-chip">Em breve</span>';
+        const adminActions = admin ? `
+          <div class="card-admin-actions">
+            <button class="icon-btn" type="button" data-edit="${escapeHtml(card.id)}" title="Editar">✎</button>
+            <button class="icon-btn danger" type="button" data-delete="${escapeHtml(card.id)}" title="Excluir">✕</button>
+          </div>
+        ` : "";
+
+        return `
+          <a class="system-card${disabledClass}" href="${href}"${target} style="--card-accent: ${escapeHtml(card.color)}">
+            <div class="system-card-top">
+              <span class="system-card-icon" aria-hidden="true">${escapeHtml(card.icon)}</span>
+              ${adminActions}
+            </div>
+            <div>
+              <h2 class="system-card-title">${escapeHtml(card.title)}</h2>
+              <p class="system-card-desc">${escapeHtml(card.desc)}</p>
+            </div>
+            <span class="system-card-action">${action}</span>
+          </a>
+        `;
+      }).join("");
+
+      if (admin) {
+        grid.insertAdjacentHTML("beforeend", `
+          <button class="system-card add-card" id="add-card" type="button">
+            <span class="add-card-inner">
+              <span class="add-card-plus">+</span>
+              <strong>Adicionar sistema</strong>
+              <p class="system-card-desc">Criar um novo card com nome, descrição e URL.</p>
+            </span>
+          </button>
+        `);
+      }
+    }
+
+    function openOverlay(el) {
+      el.classList.add("open");
+    }
+
+    function closeOverlay(el) {
+      el.classList.remove("open");
+    }
+
+    function fillEmojiGrid(selected) {
+      emojiGrid.innerHTML = EMOJIS.map((emoji) => `
+        <button class="emoji-opt${emoji === selected ? " active" : ""}" type="button" data-emoji="${emoji}">${emoji}</button>
+      `).join("");
+    }
+
+    function openCardForm(card) {
+      document.getElementById("card-form-title").textContent = card ? "Editar sistema" : "Novo sistema";
+      document.getElementById("card-id").value = card?.id || "";
+      document.getElementById("card-title").value = card?.title || "";
+      document.getElementById("card-desc").value = card?.desc || "";
+      document.getElementById("card-url").value = card?.url || "";
+      document.getElementById("card-color").value = card?.color || "#1565c0";
+      document.getElementById("card-icon-input").value = card?.icon || "🔗";
+      fillEmojiGrid(card?.icon || "🔗");
+      openOverlay(cardOverlay);
+    }
+
+    adminOpen.addEventListener("click", () => {
+      loginError.classList.remove("show");
+      loginForm.reset();
+      openOverlay(loginOverlay);
+      document.getElementById("admin-password").focus();
+    });
+
+    adminLogout.addEventListener("click", () => setAdmin(false));
+
+    loginForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const password = document.getElementById("admin-password").value;
+      if (password === DEFAULT_PASSWORD) {
+        closeOverlay(loginOverlay);
+        setAdmin(true);
+      } else {
+        loginError.classList.add("show");
+      }
+    });
+
+    cardForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const cards = loadCards();
+      const id = document.getElementById("card-id").value || crypto.randomUUID();
+      const next = {
+        id,
+        title: document.getElementById("card-title").value.trim(),
+        desc: document.getElementById("card-desc").value.trim(),
+        url: document.getElementById("card-url").value.trim(),
+        color: document.getElementById("card-color").value,
+        icon: document.getElementById("card-icon-input").value.trim() || "🔗"
+      };
+      const index = cards.findIndex((card) => card.id === id);
+      if (index >= 0) cards[index] = next;
+      else cards.push(next);
+      saveCards(cards);
+      closeOverlay(cardOverlay);
+      render();
+    });
+
+    document.addEventListener("click", (event) => {
+      const closeId = event.target.dataset.close;
+      if (closeId) closeOverlay(document.getElementById(closeId));
+
+      const addBtn = event.target.closest("#add-card");
+      if (addBtn) {
+        event.preventDefault();
+        openCardForm(null);
+      }
+
+      const editId = event.target.dataset.edit;
+      if (editId) {
+        event.preventDefault();
+        event.stopPropagation();
+        const card = loadCards().find((item) => item.id === editId);
+        if (card) openCardForm(card);
+      }
+
+      const deleteId = event.target.dataset.delete;
+      if (deleteId) {
+        event.preventDefault();
+        event.stopPropagation();
+        const cards = loadCards().filter((item) => item.id !== deleteId);
+        saveCards(cards);
+        render();
+      }
+
+      const emoji = event.target.dataset.emoji;
+      if (emoji) {
+        document.getElementById("card-icon-input").value = emoji;
+        fillEmojiGrid(emoji);
+      }
+    });
+
+    grid.addEventListener("click", (event) => {
+      const card = event.target.closest(".system-card");
+      if (!card || card.id === "add-card") return;
+      if (card.classList.contains("is-disabled")) event.preventDefault();
+      if (event.target.closest(".card-admin-actions")) event.preventDefault();
+    });
+
+    [loginOverlay, cardOverlay].forEach((overlay) => {
+      overlay.addEventListener("click", (event) => {
+        if (event.target === overlay) closeOverlay(overlay);
+      });
+    });
+
+    setAdmin(isAdmin());
+  </script>
+</body>
+</html>
